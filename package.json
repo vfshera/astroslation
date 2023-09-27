@@ -1,0 +1,17 @@
+{
+  "name": "i18n",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ssr:dev": "pnpm --filter=demo-ssr dev",
+    "static:dev": "pnpm --filter=demo-static dev",
+    "dev": "concurrently \"pnpm run ssr:dev\" \"pnpm run static:dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
