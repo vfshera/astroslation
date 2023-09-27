@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "exports": {
-    ".": "./lib/index.ts",
-    "./ssr.astro": "./pages/ssr.astro",
-    "./static.astro": "./pages/static.astro"
+    ".": "./lib/index.ts"
   },
   "files": [
     "lib"
