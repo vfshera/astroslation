@@ -14,6 +14,23 @@ export function createFile(fileName: string, content: string) {
 
   fs.writeFile(fileName, content, (err) => {
     if (err) throw err;
+  });
+}
+
+export function getLanguage(languages: Record<string, string>) {
+  const keys = Object.keys(languages);
+
+  let langs = "";
+
+  for (const key of keys) {
+    langs += `\t${key}: "${languages[key]}",\n`;
+  }
+
+  return `
+export const languages: Record<Language, string> = {
+${langs}
+};`;
+}
 
 export const getTranslationFunctions = (
   languageCodes: string[],
