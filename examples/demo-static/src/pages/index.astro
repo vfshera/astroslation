@@ -1,0 +1,7 @@
+---
+import { getLangFromUrl } from "@vfshera/astroslation";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<meta http-equiv="refresh" content={`0;url=/${lang}`} />
