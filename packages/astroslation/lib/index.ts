@@ -40,14 +40,62 @@ export default function createIntegration(
 
         const langKeys = Object.keys(userConfig.languages);
 
+        const translationsPath = getPath(
+          new URL(
+            `./node_modules/${PACKAGE_NAME}/lib/translations.ts`,
+            config.root
+          )
+        );
+
         createFile(
-          declarationPath.__filename,
+          translationsPath.__filename,
           `
+${getCredits()}
+
 export type Language = ${langKeys.map((key) => `"${key}"`).join(" | ")}
-export type i18nConfig = {
-  languages: Record<string, string>;
-  defaultLang: Language;
-};
+
+/**
+ * Supported languages object.
+ */
+
+${getLanguage(userConfig.languages)}
+
+/**
+ * Default language.
+ */
+
+export const defaultLang: Language = "en";
+
+
+/**
+ * Translations object containing translations for different languages.
+ */
+
+${getTranslationFunctions(
+  langKeys,
+  path.relative(translationsPath.__dirname, projectTraslationPath)
+)}
+ 
+
+
+export type Translation = typeof translations;
+
+
+
+/**
+ * Retrieves the language code from the URL path ie. Astro.url
+ */
+export function getLangFromUrl(url: URL) {
+  const [, lang] = url.pathname.split("/");
+  if (lang in translations) return lang ;
+  return defaultLang;
+}
+
+/**
+ * Loads json translations
+ * 
+ */
+export const useTranslation = async (lang: Language) => translations[lang]();
 
 `
         );
