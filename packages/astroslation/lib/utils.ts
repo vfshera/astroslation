@@ -1,6 +1,7 @@
 import fs from "fs";
 import { fileURLToPath } from "node:url";
 import path from "path";
+import { PACKAGE_NAME } from "./constants";
 
 export function getPath(fileUrl: string | URL) {
   const __filename = fileURLToPath(fileUrl);
@@ -10,8 +11,6 @@ export function getPath(fileUrl: string | URL) {
 }
 
 export function createFile(fileName: string, content: string) {
-  console.log(fileName);
-
   fs.writeFile(fileName, content, (err) => {
     if (err) throw err;
   });

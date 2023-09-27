@@ -1,10 +1,24 @@
-import type { AstroIntegration, AstroConfig } from "astro";
-import ViteRestart from "vite-plugin-restart";
+import type { AstroIntegration } from "astro";
+
 import type { i18nConfig } from "./types";
 import { PACKAGE_NAME, TRANSLATIONS_DIR } from "./constants";
-import { createFile, getPath } from "./utils";
+import {
+  createFile,
+  getCredits,
+  getLanguage,
+  getPath,
+  getTranslationFunctions,
+} from "./utils";
+import path from "path";
 
-let translations = {};
+export {
+  type Translation,
+  type Language,
+  getLangFromUrl,
+  useTranslation,
+  defaultLang,
+  languages,
+} from "./translations";
 
 export default function createIntegration(
   userConfig: i18nConfig
@@ -24,19 +38,12 @@ export default function createIntegration(
   return {
     name: PACKAGE_NAME,
     hooks: {
-      "astro:config:setup": async ({ config, updateConfig }) => {
-        /**
-         * Restart when translations change
-         */
-        const translationsGlob = new URL(
-          `./src/${TRANSLATIONS_DIR}/**/*.json`,
-          config.root
+      "astro:config:setup": async ({ config }) => {
+        const projectTraslationPath = path.resolve(
+          config.root.pathname,
+          "src",
+          TRANSLATIONS_DIR
         );
-
-        const declarationPath = getPath(
-          new URL("./src/i18n.d.ts", config.root)
-        );
-        console.log("Declaration Path: ", declarationPath);
 
         const langKeys = Object.keys(userConfig.languages);
 
@@ -97,37 +104,23 @@ export function getLangFromUrl(url: URL) {
  */
 export const useTranslation = async (lang: Language) => translations[lang]();
 
-`
+        `
         );
 
-        updateConfig({
-          vite: {
-            plugins: [
-              ViteRestart({
-                restart: [translationsGlob.pathname],
-                reload: [translationsGlob.pathname],
-              }),
-            ],
-          },
-        });
+        // updateConfig({
+        //   vite: {
+        //     plugins: [
+        //       ViteRestart({
+        //         restart: [translationsGlob.pathname],
+        //         reload: [translationsGlob.pathname],
+        //       }),
+        //     ],
+        //   },
+        // });
       },
     },
   };
 }
-
-/**
- * Retrieves the language code from the URL path ie. Astro.url
- */
-//  export function getLangFromUrl(url: URL) {
-//   const [, lang] = url.pathname.split("/");
-//   if (lang in translations) return lang ;
-//   return defaultLang;
-// }
-
-/**
- * Loads json translations
- *  */
-// export const useTranslation = async (lang: Languages) => translations[lang]();
 
 function validateConfig(config: i18nConfig) {
   const { languages, defaultLang } = config;
