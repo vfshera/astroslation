@@ -14,6 +14,30 @@ export function createFile(fileName: string, content: string) {
 
   fs.writeFile(fileName, content, (err) => {
     if (err) throw err;
-    console.log(`${fileName} is created successfully.`);
-  });
+
+export const getTranslationFunctions = (
+  languageCodes: string[],
+  basePath: string
+) => {
+  let transFunc = "";
+  for (const code of languageCodes) {
+    transFunc += `\t${code} : () => import("${basePath}/${code}.json").then((module) => module.default),\n`;
+  }
+
+  return `
+export const translations = {
+${transFunc}
+} as const;
+  `;
+};
+
+export function getCredits() {
+  return `
+/**
+ * package: ${PACKAGE_NAME}
+ * 
+ * 
+ */
+
+`;
 }
