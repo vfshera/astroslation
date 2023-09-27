@@ -1,0 +1,24 @@
+{
+  "name": "astroslation",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "withastro"
+  ],
+  "scripts": {},
+  "devDependencies": {
+    "@types/node": "^20.6.3",
+    "astro": "^3.1.4",
+    "vite": "^4.4.9",
+    "vite-plugin-restart": "^0.3.1"
+  },
+  "peerDependencies": {
+    "astro": "^2.0.0-beta.0"
+  }
+}
