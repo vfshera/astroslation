@@ -1,12 +1,14 @@
 {
-  "name": "astroslation",
+  "name": "@vfshera/astroslation",
   "version": "0.0.1",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./lib/index.ts",
+    "./ssr.astro": "./pages/ssr.astro",
+    "./static.astro": "./pages/static.astro"
   },
   "files": [
-    "src"
+    "lib"
   ],
   "keywords": [
     "withastro"

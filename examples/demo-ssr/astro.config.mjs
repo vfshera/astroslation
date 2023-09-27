@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import astroslation from "astroslation";
+import astroslation from "@vfshera/astroslation";
 
 // https://astro.build/config
 export default defineConfig({

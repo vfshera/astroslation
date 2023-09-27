@@ -1,4 +1,4 @@
-export const PACKAGE_NAME = "astroslation";
+export const PACKAGE_NAME = "@vfshera/astroslation";
 // const CONFIG_NAME = "i18n.config.ts";
 export const TRANSLATIONS_DIR = "translations";
 

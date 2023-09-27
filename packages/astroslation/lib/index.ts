@@ -1,7 +1,6 @@
-import type { AstroIntegration } from "astro";
+import type { AstroIntegration, AstroConfig } from "astro";
 import ViteRestart from "vite-plugin-restart";
 import type { i18nConfig } from "./types";
-import { getRedirectPage, validateConfig } from "./utils";
 import { PACKAGE_NAME, TRANSLATIONS_DIR } from "./constants";
 
 export default function createIntegration(
@@ -46,24 +45,6 @@ export default function createIntegration(
           },
         });
 
-        // const configURL = new URL(`./${CONFIG_NAME}`, config.root);
-        /**
-         * Restart Server when config changes
-         */
-        // addWatchFile(configURL);
-
-        // userConfig = (await load("i18n.config", {
-        //   mustExist: true,
-        //   cwd: fileURLToPath(config.root),
-        //   filePath: fileURLToPath(configURL),
-        // })) as i18nConfig;
-
-        // console.log(usrcnfg);
-
-        // userConfig = (await import(fileURLToPath(configURL)).then(
-        //   (res) => res.default
-        // )) as i18nConfig;
-
         injectRoute({
           pattern: "/main",
           entryPoint: getRedirectPage(config.output),
@@ -71,4 +52,21 @@ export default function createIntegration(
       },
     },
   };
+}
+
+function getRedirectPage(outputType: AstroConfig["output"]) {
+  return outputType === "server"
+    ? `${PACKAGE_NAME}/ssr.astro`
+    : `${PACKAGE_NAME}/static.astro`;
+}
+
+function validateConfig(config: i18nConfig) {
+  const { languages, defaultLang } = config;
+  const langKeys = Object.keys(languages);
+
+  if (!langKeys.includes(defaultLang)) {
+    throw new Error(
+      `Default Language ${defaultLang} is not a valid language key, Try ${langKeys}`
+    );
+  }
 }
