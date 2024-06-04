@@ -1,17 +1,20 @@
 {
-  "name": "i18n",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "ssr:dev": "pnpm --filter=demo-ssr dev",
-    "static:dev": "pnpm --filter=demo-static dev",
-    "dev": "concurrently \"pnpm run ssr:dev\" \"pnpm run static:dev\""
+  "name": "root",
+  "private": true,
+  "packageManager": "pnpm@9.1.4",
+  "engines": {
+    "node": ">=18.20.3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "build": "pnpm --filter=astroslation dev",
+    "dev": "pnpm --stream -r -parallel dev",
+    "changeset": "changeset",
+    "release": "pnpm run build && changeset publish",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply ."
+  },
   "devDependencies": {
-    "concurrently": "^8.2.1"
+    "@biomejs/biome": "1.7.3",
+    "@changesets/cli": "^2.27.5"
   }
 }

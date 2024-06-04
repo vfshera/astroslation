@@ -1,0 +1,39 @@
+{
+  "name": "astroslation",
+  "version": "0.0.0",
+  "description": "Translations in Astro",
+  "author": "Franklin Shera",
+  "license": "MIT",
+  "keywords": [
+    "astroslation",
+    "astro-integration",
+    "astro-component",
+    "withastro",
+    "astro"
+  ],
+  "homepage": "https://github.com/vfshera/astroslation#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "astro": "^4.9.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.1.0"
+  }
+}
